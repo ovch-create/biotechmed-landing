@@ -368,7 +368,8 @@ function initModal() {
     const src = plan.widgetScriptSrc || '';
     return `<!doctype html><html><head><meta charset="utf-8"><base target="_top">
 <style>
-  body{margin:0;padding:14px;background:#fff;color:#111;font:14px/1.45 -apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+  html,body{margin:0;padding:0;background:#fff;color:#111;font:14px/1.45 -apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+  body{padding:14px 14px 24px;overflow-y:auto;}
   a{color:#0369a1;}
   .gc-loading{color:#666;text-align:center;padding:20px 0;}
 </style>
