@@ -1642,7 +1642,11 @@ section { padding: 96px 0; }
   .segments__grid { grid-template-columns: 1fr; }
   .benefits__grid { grid-template-columns: 1fr; }
   .hero__stats { flex-direction: column; border-radius: var(--radius); }
-  .hero__stat { border-right: none; border-bottom: 1px solid var(--border); }
+  .hero__stat { border-right: none; border-bottom: 1px solid var(--border); text-align: center; padding: 18px 16px; }
+  .hero__stat-num, .hero__stat-label { text-align: center; }
   .hero__stat:last-child { border-bottom: none; }
+  .nav__date { display: none; }
+  .nav__inner { gap: 12px; }
+  .nav .btn { padding: 8px 14px; font-size: 13px; white-space: nowrap; }
   .about__stats { grid-template-columns: 1fr; }
 }
