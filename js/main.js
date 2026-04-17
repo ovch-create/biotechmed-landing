@@ -1,5 +1,4 @@
-/* TODO: после настройки Apps Script вставьте сюда URL веб-приложения */
-const APPS_SCRIPT_URL = '';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwDC7-stmJkyWU3Wo_EEkRcD3UO-dvWaD_NFXYjCjKtKnR-9j6Cp7PUqN0ysM81d7Iu/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
   initCanvas();
