@@ -22,7 +22,8 @@ function doPost(e) {
       sheet.appendRow([
         'Дата', 'ФИО', 'Email', 'Телефон',
         'Соцсети', 'От кого приглашение',
-        'Специализация', 'Формат', 'Стоимость'
+        'Специализация', 'Формат', 'Стоимость',
+        'Статус оплаты'
       ]);
     }
 
@@ -35,7 +36,8 @@ function doPost(e) {
       data.referral || '',
       data.specialization || '',
       data.format || '',
-      data.price || ''
+      data.price || '',
+      data.paymentStatus || 'Не подтверждена'
     ]);
 
     return ContentService

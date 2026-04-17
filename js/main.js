@@ -305,24 +305,31 @@ function initModal() {
   const submitBtn = document.getElementById('modal-submit');
   if (!overlay || !form) return;
 
+  let currentPlan = null;
+
   consent.addEventListener('change', () => {
     submitBtn.disabled = !consent.checked;
   });
 
+  function cleanPayment() {
+    const oldPayment = overlay.querySelector('.modal__payment');
+    if (oldPayment) oldPayment.remove();
+  }
+
   function openModal(planIndex) {
     const p = pricing[planIndex];
     if (!p) return;
+    currentPlan = p;
     document.getElementById('modal-title').textContent = p.title;
     document.getElementById('modal-subtitle').textContent = p.subtitle;
     document.getElementById('modal-price').textContent = 'Стоимость участия — ' + p.formPrice;
     document.getElementById('form-format').value = p.formFormat;
     document.getElementById('form-price-val').value = p.formPrice;
-    document.getElementById('form-payment-url').value = p.paymentUrl || '#';
     form.reset();
     submitBtn.disabled = true;
-    overlay.querySelector('.modal__form').style.display = '';
-    const success = overlay.querySelector('.modal__success');
-    if (success) success.remove();
+    submitBtn.textContent = 'Участвовать';
+    form.style.display = '';
+    cleanPayment();
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -356,6 +363,33 @@ function initModal() {
     });
   });
 
+  function renderPaymentWidget(plan) {
+    form.style.display = 'none';
+    cleanPayment();
+    const modal = overlay.querySelector('.modal');
+    const wrap = document.createElement('div');
+    wrap.className = 'modal__payment';
+    wrap.innerHTML = `
+      <div class="modal__payment-head">
+        <div class="modal__payment-icon">✓</div>
+        <div class="modal__payment-title">Заявка принята</div>
+        <p class="modal__payment-text">Осталось оплатить участие. Введите данные в форму оплаты ниже — она сформирует чек и переведёт на страницу оплаты.</p>
+      </div>
+      <div class="modal__payment-widget" id="modal-payment-widget"></div>
+      <p class="modal__payment-fallback">Форма не загружается? Напишите на <a href="mailto:support@anagran.ru">support@anagran.ru</a></p>
+    `;
+    modal.appendChild(wrap);
+
+    if (plan && plan.widgetScriptSrc) {
+      const target = wrap.querySelector('#modal-payment-widget');
+      const s = document.createElement('script');
+      s.id = plan.widgetScriptId || '';
+      s.src = plan.widgetScriptSrc;
+      s.async = true;
+      target.appendChild(s);
+    }
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     submitBtn.disabled = true;
@@ -369,10 +403,9 @@ function initModal() {
       referral: document.getElementById('form-referral').value,
       specialization: document.getElementById('form-spec').value,
       format: document.getElementById('form-format').value,
-      price: document.getElementById('form-price-val').value
+      price: document.getElementById('form-price-val').value,
+      paymentStatus: 'Не подтверждена'
     };
-
-    const paymentUrl = document.getElementById('form-payment-url').value;
 
     if (APPS_SCRIPT_URL) {
       try {
@@ -387,19 +420,6 @@ function initModal() {
       }
     }
 
-    if (paymentUrl && paymentUrl !== '#') {
-      window.location.href = paymentUrl;
-    } else {
-      form.style.display = 'none';
-      const modal = overlay.querySelector('.modal');
-      const successDiv = document.createElement('div');
-      successDiv.className = 'modal__success';
-      successDiv.innerHTML = `
-        <div class="modal__success-icon">✓</div>
-        <div class="modal__success-title">Заявка отправлена!</div>
-        <p class="modal__success-text">Спасибо за регистрацию. Ссылка на оплату будет доступна в ближайшее время.</p>
-      `;
-      modal.appendChild(successDiv);
-    }
+    renderPaymentWidget(currentPlan);
   });
 }
