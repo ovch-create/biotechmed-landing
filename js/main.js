@@ -363,6 +363,21 @@ function initModal() {
     });
   });
 
+  function buildWidgetSrcdoc(plan) {
+    const sid = plan.widgetScriptId || '';
+    const src = plan.widgetScriptSrc || '';
+    return `<!doctype html><html><head><meta charset="utf-8"><base target="_top">
+<style>
+  body{margin:0;padding:14px;background:#fff;color:#111;font:14px/1.45 -apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+  a{color:#0369a1;}
+  .gc-loading{color:#666;text-align:center;padding:20px 0;}
+</style>
+</head><body>
+<div class="gc-loading">Загружаем форму оплаты…</div>
+<script id="${sid}" src="${src}"></script>
+</body></html>`;
+  }
+
   function renderPaymentWidget(plan) {
     form.style.display = 'none';
     cleanPayment();
@@ -382,11 +397,12 @@ function initModal() {
 
     if (plan && plan.widgetScriptSrc) {
       const target = wrap.querySelector('#modal-payment-widget');
-      const s = document.createElement('script');
-      s.id = plan.widgetScriptId || '';
-      s.src = plan.widgetScriptSrc;
-      s.async = true;
-      target.appendChild(s);
+      const iframe = document.createElement('iframe');
+      iframe.className = 'modal__payment-iframe';
+      iframe.setAttribute('loading', 'lazy');
+      iframe.setAttribute('title', 'Форма оплаты GetCourse');
+      iframe.srcdoc = buildWidgetSrcdoc(plan);
+      target.appendChild(iframe);
     }
   }
 
