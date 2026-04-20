@@ -19,9 +19,7 @@ const pricing = [
   {
     title: "Очное участие",
     subtitle: "Санкт-Петербург, 23 мая",
-    price: "2 500 ₽",
-    priceNote: "до 19 апреля",
-    priceLater: "3 500 ₽ с 20 апреля",
+    price: "3 500 ₽",
     highlighted: true,
     features: [
       "Полная программа интенсива в очном формате",
@@ -34,9 +32,9 @@ const pricing = [
     note: "Количество мест ограничено",
     cta: "Зарегистрироваться",
     formFormat: "Очное",
-    formPrice: new Date() < new Date('2026-04-20') ? "2 500 ₽" : "3 500 ₽",
-    widgetScriptId: "b33ccd3e92494e8428579260955b021cdea31c74",
-    widgetScriptSrc: "https://artlifecourse.getcourse.ru/pl/lite/widget/script?id=1583154"
+    formPrice: "3 500 ₽",
+    widgetScriptId: "86d523e3418261cd6b38c37932ce3a948e299228",
+    widgetScriptSrc: "https://artlifecourse.getcourse.ru/pl/lite/widget/script?id=1583156"
   },
   {
     title: "Расширенный",
