@@ -230,8 +230,8 @@ function renderSpeakers() {
         ${s.photo ? `<img src="${s.photo}" alt="${s.name}" loading="lazy">` : `<span class="speaker-photo-label">ФОТО</span>`}
       </div>
       <div class="speaker-card__body">
-        <div class="speaker-card__name">${s.name}</div>
-        <div class="speaker-card__cred">${s.credentials}</div>
+        <div class="speaker-card__name">${s.name}${s.name2 ? `<span class="speaker-card__name-sep"> &amp; </span>${s.name2}` : ''}</div>
+        <div class="speaker-card__cred">${s.credentials}${s.credentials2 ? `<br><br>${s.credentials2}` : ''}</div>
         <div class="speaker-card__topic">${s.topic}</div>
       </div>
     </div>
