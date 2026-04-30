@@ -10,21 +10,55 @@
  * 6. Тип: «Веб-приложение», выполнять как: «Я», доступ: «Все»
  * 7. Скопируйте URL и вставьте в js/main.js → APPS_SCRIPT_URL
  *
- * Ожидаемые заголовки (гибкие синонимы, регистр не важен):
+ * Данные с лендинга приходят POST-ом в поле payload (form-urlencoded) или как JSON.
+ * Ожидаемые заголовки (пример):
  * № | ФИО | почта | аккаунт | от кого получил | специальность | формат | телефон |
  * ФИО 2 | почта 2 | телефон 2 | аккаунт 2 | Дата | Стоимость | Статус оплаты
  */
 
 function normHeader(s) {
   return String(s || '')
+    .replace(/\u00a0/g, ' ')
     .trim()
     .toLowerCase()
     .replace(/\s+/g, ' ');
 }
 
+/**
+ * Парсит тело POST: JSON или form field payload= (нужен для fetch no-cors + urlencoded).
+ */
+function parseRequestData(e) {
+  if (e.parameter && e.parameter.payload) {
+    return JSON.parse(e.parameter.payload);
+  }
+  if (!e.postData || !e.postData.contents) {
+    throw new Error('Пустое тело запроса');
+  }
+  var raw = String(e.postData.contents).trim();
+  var ct = (e.postData.type || '').toLowerCase();
+  if (ct.indexOf('application/json') >= 0) {
+    return JSON.parse(raw);
+  }
+  if (raw.charAt(0) === '{' || raw.charAt(0) === '[') {
+    return JSON.parse(raw);
+  }
+  if (raw.indexOf('payload=') === 0) {
+    var v = raw.substring('payload='.length);
+    return JSON.parse(decodeURIComponent(v));
+  }
+  var parts = raw.split('&');
+  var i;
+  for (i = 0; i < parts.length; i++) {
+    if (parts[i].indexOf('payload=') === 0) {
+      return JSON.parse(decodeURIComponent(parts[i].substring('payload='.length).replace(/\+/g, ' ')));
+    }
+  }
+  return JSON.parse(raw);
+}
+
 function doPost(e) {
   try {
-    var data = JSON.parse(e.postData.contents);
+    var data = parseRequestData(e);
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
     var lastCol = Math.max(sheet.getLastColumn(), 1);
@@ -59,6 +93,7 @@ function doPost(e) {
       referral: [
         'от кого получил',
         'от кого',
+        'от кого узнал',
         'приглашение',
         'откуда'
       ],

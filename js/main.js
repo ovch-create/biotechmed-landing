@@ -499,11 +499,12 @@ function initModal() {
 
     if (APPS_SCRIPT_URL) {
       try {
+        const payload = JSON.stringify(data);
         await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: 'payload=' + encodeURIComponent(payload)
         });
       } catch (err) {
         console.warn('Sheet submission error:', err);
