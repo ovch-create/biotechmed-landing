@@ -251,18 +251,27 @@ function renderPricing() {
   if (!grid) return;
   grid.innerHTML = pricing.map((p, i) => {
     const hlClass = p.highlighted ? 'price-card--hl' : '';
-    const badge   = p.highlighted ? '<div class="price-card__badge">Рекомендуем</div>' : '';
+    const promoClass = p.promo ? 'price-card--promo' : '';
+    const badgeText = p.badgeText || 'Рекомендуем';
+    const badgeClass = p.promo ? 'price-card__badge price-card__badge--promo' : 'price-card__badge';
+    const badge = p.highlighted ? `<div class="${badgeClass}">${badgeText}</div>` : '';
     const subNote = p.priceNote
       ? `<div class="price-card__note-sm">${p.priceNote}</div><div class="price-card__note-sm">${p.priceLater}</div>`
       : '';
+    const priceSm = p.priceDetail ? `<div class="price-card__note-sm">${p.priceDetail}</div>` : '';
+    const lede = p.lede ? `<p class="price-card__lede">${p.lede}</p>` : '';
     const warning = p.note ? `<div class="price-card__warning">${p.note}</div>` : '';
-    const btnStyle = p.highlighted ? 'btn--blue' : 'btn--ghost';
+    const useBlueCta = p.pairForm || p.formFormat === 'Очное';
+    const btnStyle = useBlueCta ? 'btn--blue' : 'btn--outline';
+    const cardId = p.anchorId ? ` id="${p.anchorId}"` : '';
     return `
-      <div class="price-card ${hlClass}">
+      <div class="price-card ${hlClass} ${promoClass}"${cardId}>
         ${badge}
         <div class="price-card__title">${p.title}</div>
         <div class="price-card__sub">${p.subtitle}</div>
+        ${lede}
         <div class="price-card__price">${p.price}</div>
+        ${priceSm}
         ${subNote}
         <div class="price-card__divider"></div>
         <ul class="price-card__feats">
@@ -274,6 +283,7 @@ function renderPricing() {
     `;
   }).join('');
 }
+
 
 /* ===== REVIEWS ===== */
 function renderReviews() {
@@ -315,13 +325,41 @@ function initModal() {
     if (oldPayment) oldPayment.remove();
   }
 
+  const pairBlock = document.getElementById('modal-pair-fields');
+  const legendP1 = document.getElementById('modal-legend-p1');
+  const sharedHint = document.getElementById('modal-shared-hint');
+  const consentText = document.getElementById('form-consent-text');
+  const pairFieldIds = ['form-name2', 'form-email2', 'form-phone2', 'form-social2'];
+  const CONSENT_DEFAULT = 'Я согласен на обработку моих персональных данных в соответствии с <a href="https://artlifecourse.getcourse.ru/page4" target="_blank">Условиями</a>';
+  const CONSENT_PAIR = 'Мы согласны на обработку персональных данных участников в соответствии с <a href="https://artlifecourse.getcourse.ru/page4" target="_blank">Условиями</a>';
+
+  function setPairFormMode(isPair) {
+    if (pairBlock) pairBlock.hidden = !isPair;
+    if (legendP1) legendP1.hidden = !isPair;
+    if (sharedHint) sharedHint.hidden = !isPair;
+    if (consentText) {
+      consentText.innerHTML = isPair ? CONSENT_PAIR : CONSENT_DEFAULT;
+    }
+    document.querySelectorAll('#modal-fs-p1 .modal__label').forEach((el) => {
+      const d = el.getAttribute('data-default-label');
+      const pl = el.getAttribute('data-pair-label');
+      if (d) el.textContent = isPair && pl ? pl : d;
+    });
+    pairFieldIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.required = isPair && id !== 'form-social2';
+    });
+  }
+
   function openModal(planIndex) {
     const p = pricing[planIndex];
     if (!p) return;
     currentPlan = p;
     document.getElementById('modal-title').textContent = p.title;
     document.getElementById('modal-subtitle').textContent = p.subtitle;
-    document.getElementById('modal-price').textContent = 'Стоимость участия — ' + p.formPrice;
+    const priceLine = p.modalPriceLine || ('Стоимость участия — ' + p.formPrice);
+    document.getElementById('modal-price').textContent = priceLine;
     document.getElementById('form-format').value = p.formFormat;
     document.getElementById('form-price-val').value = p.formPrice;
     form.reset();
@@ -329,6 +367,7 @@ function initModal() {
     submitBtn.textContent = 'Участвовать';
     form.style.display = '';
     cleanPayment();
+    setPairFormMode(!!p.pairForm);
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -411,6 +450,7 @@ function initModal() {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Отправка...';
 
+    const isPair = currentPlan && currentPlan.pairForm;
     const data = {
       name: document.getElementById('form-name').value,
       email: document.getElementById('form-email').value,
@@ -420,7 +460,12 @@ function initModal() {
       specialization: document.getElementById('form-spec').value,
       format: document.getElementById('form-format').value,
       price: document.getElementById('form-price-val').value,
-      paymentStatus: 'Не подтверждена'
+      paymentStatus: 'Не подтверждена',
+      pairBooking: !!isPair,
+      name2: isPair ? document.getElementById('form-name2').value : '',
+      email2: isPair ? document.getElementById('form-email2').value : '',
+      phone2: isPair ? document.getElementById('form-phone2').value : '',
+      social2: isPair ? document.getElementById('form-social2').value : ''
     };
 
     if (APPS_SCRIPT_URL) {

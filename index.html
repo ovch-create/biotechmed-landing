@@ -7,7 +7,7 @@
   <meta name="description" content="Профессиональный интенсив ANAGRAN для врачей и нутрициологов. Научная база, клинические кейсы, прикладные решения. 23 мая, Санкт-Петербург." />
   <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" href="favicon.png" />
-  <link rel="stylesheet" href="css/style.css?v=2" />
+  <link rel="stylesheet" href="css/style.css?v=9" />
 
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
@@ -204,13 +204,26 @@
             <div class="about__stat-label">Интенсивный день насыщенного обучения</div>
           </div>
           <div class="about__stat reveal reveal-delay-3">
-            <div class="about__stat-num count-target" data-target="3">3</div>
+            <div class="about__stat-num count-target" data-target="4">4</div>
             <div class="about__stat-label">Формата участия на выбор</div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+
+  <!-- PROMO TEASER -->
+  <div class="promo-teaser">
+    <div class="container">
+      <div class="promo-teaser__inner">
+        <p class="promo-teaser__text">
+          <strong>Акция «БиотехМед вместе»:</strong> специальная цена до 10 мая при&nbsp;единовременной покупке для двоих участников.
+        </p>
+        <a href="#pricing-duo" class="promo-teaser__btn">Узнать подробности</a>
+      </div>
+    </div>
+  </div>
 
   <!-- SEGMENTS -->
   <section class="segments" id="segments">
@@ -302,7 +315,7 @@
       <div class="sec-header sec-header--c">
         <div class="label">Участие</div>
         <h2 class="h2">Форматы и стоимость</h2>
-        <p class="lead">Очное участие, запись или расширенный доступ — выберите подходящий вариант.</p>
+        <p class="lead">В том числе акция «вместе на двоих», очное участие, запись или расширенный доступ — выберите вариант ниже.</p>
       </div>
       <div class="pricing__grid" id="pricing-grid"></div>
     </div>
@@ -403,34 +416,59 @@
       <form class="modal__form" id="reg-form">
         <input type="hidden" id="form-format" name="format">
         <input type="hidden" id="form-price-val" name="price">
-        <div class="modal__field">
-          <label class="modal__label" for="form-name">Ваше ФИО</label>
-          <input class="modal__input" type="text" id="form-name" name="name" placeholder="Ваше ФИО" required>
+        <div class="modal__fieldset" id="modal-fs-p1">
+          <div class="modal__legend" id="modal-legend-p1" hidden>Участник 1</div>
+          <div class="modal__field">
+            <label class="modal__label" for="form-name" data-default-label="Ваше ФИО" data-pair-label="Участник 1 — ФИО">Ваше ФИО</label>
+            <input class="modal__input" type="text" id="form-name" name="name" placeholder="ФИО" required autocomplete="name">
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="form-email" data-default-label="Электронная почта" data-pair-label="Участник 1 — эл. почта">Электронная почта</label>
+            <input class="modal__input" type="email" id="form-email" name="email" placeholder="Эл. почта" required autocomplete="email">
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="form-phone" data-default-label="Телефон" data-pair-label="Участник 1 — телефон">Телефон</label>
+            <input class="modal__input" type="tel" id="form-phone" name="phone" placeholder="Телефон" required autocomplete="tel">
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="form-social" data-default-label="Аккаунт в соцсетях" data-pair-label="Участник 1 — соцсети">Аккаунт в соцсетях</label>
+            <input class="modal__input" type="text" id="form-social" name="social" placeholder="Ссылка или ник">
+          </div>
         </div>
-        <div class="modal__field">
-          <label class="modal__label" for="form-email">Введите ваш электронный адрес</label>
-          <input class="modal__input" type="email" id="form-email" name="email" placeholder="Введите ваш эл. адрес" required>
+        <div class="modal__fieldset modal__fieldset--pair" id="modal-pair-fields" hidden>
+          <div class="modal__legend">Участник 2</div>
+          <div class="modal__field">
+            <label class="modal__label" for="form-name2">ФИО</label>
+            <input class="modal__input" type="text" id="form-name2" name="name2" placeholder="ФИО второго участника" autocomplete="name">
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="form-email2">Электронная почта</label>
+            <input class="modal__input" type="email" id="form-email2" name="email2" placeholder="Эл. почта" autocomplete="email">
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="form-phone2">Телефон</label>
+            <input class="modal__input" type="tel" id="form-phone2" name="phone2" placeholder="Телефон" autocomplete="tel">
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="form-social2">Аккаунт в соцсетях</label>
+            <input class="modal__input" type="text" id="form-social2" name="social2" placeholder="Ссылка или ник">
+          </div>
         </div>
-        <div class="modal__field">
-          <label class="modal__label" for="form-phone">Телефон</label>
-          <input class="modal__input" type="tel" id="form-phone" name="phone" placeholder="Введите ваш телефон" required>
-        </div>
-        <div class="modal__field">
-          <label class="modal__label" for="form-social">Ваш аккаунт в социальных сетях</label>
-          <input class="modal__input" type="text" id="form-social" name="social" placeholder="Ваш аккаунт в социальных сетях">
-        </div>
-        <div class="modal__field">
-          <label class="modal__label" for="form-referral">От кого вы получили приглашение</label>
-          <input class="modal__input" type="text" id="form-referral" name="referral" placeholder="От кого вы получили приглашение">
-        </div>
-        <div class="modal__field">
-          <label class="modal__label" for="form-spec">Врачебная специализация</label>
-          <input class="modal__input" type="text" id="form-spec" name="specialization" placeholder="Врачебная специализация">
+        <p class="modal__hint" id="modal-shared-hint" hidden>Блок ниже заполняет контактное лицо (один из участников).</p>
+        <div class="modal__fieldset modal__fieldset--shared" id="modal-fs-shared">
+          <div class="modal__field">
+            <label class="modal__label" for="form-referral">От кого приглашение</label>
+            <input class="modal__input" type="text" id="form-referral" name="referral" placeholder="Источник или имя">
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="form-spec">Врачебная специализация</label>
+            <input class="modal__input" type="text" id="form-spec" name="specialization" placeholder="Специализация контактного лица">
+          </div>
         </div>
         <div class="modal__consent">
           <label class="modal__checkbox-label">
             <input type="checkbox" id="form-consent" required>
-            <span>Я согласен на обработку моих персональных данных в соответствии с <a href="https://artlifecourse.getcourse.ru/page4" target="_blank">Условиями</a></span>
+            <span id="form-consent-text">Я согласен на обработку моих персональных данных в соответствии с <a href="https://artlifecourse.getcourse.ru/page4" target="_blank">Условиями</a></span>
           </label>
         </div>
         <button type="submit" class="btn btn--blue modal__submit" id="modal-submit" disabled>Участвовать</button>

@@ -1,9 +1,9 @@
 /*
  * ИНСТРУКЦИЯ:
  * 1. Откройте Google Таблицу: https://docs.google.com/spreadsheets/d/18XzAjhUSICZ020aOGOQlt5zkt5i76Rb5OaKrTuHPWIU
- * 2. Убедитесь, что в первой строке есть колонки:
- *    № | ФИО | почта | аккаунт | от кого получил | специальность | формат | телефон | Дата | Стоимость | Статус оплаты
- *    (последние три можно добавить в конец — в любом порядке, скрипт найдёт их по названию)
+ * 2. Убедитесь, что в первой строке есть колонки (добавьте при необходимости):
+ *    № | ФИО | почта | аккаунт | от кого получил | специальность | формат | телефон |
+ *    ФИО 2 | почта 2 | телефон 2 | аккаунт 2 | Дата | Стоимость | Статус оплаты
  * 3. Меню: Расширения > Apps Script
  * 4. Удалите всё содержимое и вставьте этот код
  * 5. Сохраните (Cmd+S)
@@ -22,7 +22,6 @@ function doPost(e) {
     var lastCol = Math.max(sheet.getLastColumn(), 1);
     var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
 
-    // Возможные варианты заголовков для каждого поля
     var headerMap = {
       number:         ['№', 'номер', 'n'],
       name:           ['фио', 'имя'],
@@ -32,6 +31,10 @@ function doPost(e) {
       specialization: ['специальность', 'специализация'],
       format:         ['формат'],
       phone:          ['телефон', 'phone'],
+      name2:          ['фио 2', 'фио2', 'участник 2 фио'],
+      email2:         ['почта 2', 'почта2', 'email 2', 'email2'],
+      phone2:         ['телефон 2', 'телефон2', 'phone 2'],
+      social2:        ['аккаунт 2', 'аккаунт2', 'соц 2'],
       date:           ['дата', 'date'],
       price:          ['стоимость', 'цена', 'price'],
       paymentStatus:  ['статус оплаты', 'статус', 'оплата']
@@ -60,7 +63,7 @@ function doPost(e) {
       if (colIndex > 0 && colIndex <= lastCol) rowValues[colIndex - 1] = value;
     }
 
-    setCell(cols.number, nextRow - 1); // порядковый номер = № строки минус заголовок
+    setCell(cols.number, nextRow - 1);
     setCell(cols.name, data.name || '');
     setCell(cols.email, data.email || '');
     setCell(cols.social, data.social || '');
@@ -68,6 +71,10 @@ function doPost(e) {
     setCell(cols.specialization, data.specialization || '');
     setCell(cols.format, data.format || '');
     setCell(cols.phone, data.phone || '');
+    setCell(cols.name2, data.name2 || '');
+    setCell(cols.email2, data.email2 || '');
+    setCell(cols.phone2, data.phone2 || '');
+    setCell(cols.social2, data.social2 || '');
     setCell(cols.date, new Date().toLocaleString('ru-RU'));
     setCell(cols.price, data.price || '');
     setCell(cols.paymentStatus, data.paymentStatus || 'Не подтверждена');
