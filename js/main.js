@@ -409,9 +409,22 @@ function initModal() {
     const src = plan.widgetScriptSrc || '';
     return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base target="_top">
 <style>
-  html,body{margin:0;padding:0;background:#fff;color:#111;font:14px/1.45 -apple-system,Segoe UI,Roboto,Arial,sans-serif;}
-  html,body{min-height:100%;}
-  body{padding:14px 14px 40px;overflow-x:hidden;}
+  html{
+    margin:0;
+    height:100%;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  body{
+    margin:0;
+    min-height:100%;
+    box-sizing:border-box;
+    padding:14px 14px 48px;
+    overflow-x:hidden;
+    background:#fff;
+    color:#111;
+    font:14px/1.45 -apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  }
   a{color:#0369a1;}
   .gc-loading{color:#666;text-align:center;padding:16px 8px;font-size:14px;}
   .gc-loading.is-hidden{display:none !important;}
@@ -469,6 +482,7 @@ function initModal() {
         'allow',
         'payment *; publickey-credentials-get *; clipboard-write; fullscreen'
       );
+      iframe.setAttribute('scrolling', 'yes');
       iframe.srcdoc = buildWidgetSrcdoc(plan);
       target.appendChild(iframe);
     }
