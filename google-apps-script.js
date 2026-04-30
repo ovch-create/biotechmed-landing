@@ -1,18 +1,26 @@
 /*
  * ИНСТРУКЦИЯ:
- * 1. Откройте Google Таблицу: https://docs.google.com/spreadsheets/d/18XzAjhUSICZ020aOGOQlt5zkt5i76Rb5OaKrTuHPWIU
- * 2. Убедитесь, что в первой строке есть колонки (добавьте при необходимости):
- *    № | ФИО | почта | аккаунт | от кого получил | специальность | формат | телефон |
- *    ФИО 2 | почта 2 | телефон 2 | аккаунт 2 | Дата | Стоимость | Статус оплаты
+ * 1. Откройте нужную Google Таблицу с заявками.
+ * 2. В первой строке — заголовки колонок. Для пары достаточно добавить вручную:
+ *    ФИО 2 | почта 2 | телефон 2 | аккаунт 2
+ *    Если этих колонок нет — скрипт создаст их сам справа при первой заявке «на двоих».
  * 3. Меню: Расширения > Apps Script
- * 4. Удалите всё содержимое и вставьте этот код
- * 5. Сохраните (Cmd+S)
- * 6. Нажмите «Развернуть» > «Новое развёртывание»
- * 7. Тип: «Веб-приложение», Выполнять как: «Я», Доступ: «Все»
- * 8. Нажмите «Развернуть», разрешите доступ
- * 9. Скопируйте URL веб-приложения
- * 10. Вставьте URL в файл js/main.js в переменную APPS_SCRIPT_URL
+ * 4. Вставьте этот код, сохраните (Cmd+S)
+ * 5. «Развернуть» > «Новое развёртывание» (или «Управление развёртываниями» — изменить, версия новая)
+ * 6. Тип: «Веб-приложение», выполнять как: «Я», доступ: «Все»
+ * 7. Скопируйте URL и вставьте в js/main.js → APPS_SCRIPT_URL
+ *
+ * Ожидаемые заголовки (гибкие синонимы, регистр не важен):
+ * № | ФИО | почта | аккаунт | от кого получил | специальность | формат | телефон |
+ * ФИО 2 | почта 2 | телефон 2 | аккаунт 2 | Дата | Стоимость | Статус оплаты
  */
+
+function normHeader(s) {
+  return String(s || '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ');
+}
 
 function doPost(e) {
   try {
@@ -23,29 +31,141 @@ function doPost(e) {
     var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
 
     var headerMap = {
-      number:         ['№', 'номер', 'n'],
-      name:           ['фио', 'имя'],
-      email:          ['почта', 'email', 'e-mail', 'эл. почта', 'эл почта'],
-      social:         ['аккаунт', 'соцсети', 'соц сети', 'соц. сети', 'соц.сети'],
-      referral:       ['от кого получил', 'от кого', 'приглашение'],
-      specialization: ['специальность', 'специализация'],
-      format:         ['формат'],
-      phone:          ['телефон', 'phone'],
-      name2:          ['фио 2', 'фио2', 'участник 2 фио'],
-      email2:         ['почта 2', 'почта2', 'email 2', 'email2'],
-      phone2:         ['телефон 2', 'телефон2', 'phone 2'],
-      social2:        ['аккаунт 2', 'аккаунт2', 'соц 2'],
-      date:           ['дата', 'date'],
-      price:          ['стоимость', 'цена', 'price'],
-      paymentStatus:  ['статус оплаты', 'статус', 'оплата']
+      number: [
+        '№',
+        'номер',
+        'n',
+        'no'
+      ],
+      name: [
+        'фио',
+        'имя'
+      ],
+      email: [
+        'почта',
+        'email',
+        'e-mail',
+        'эл. почта',
+        'эл почта',
+        'электронная почта'
+      ],
+      social: [
+        'аккаунт',
+        'соцсети',
+        'соц сети',
+        'соц. сети',
+        'соц.сети'
+      ],
+      referral: [
+        'от кого получил',
+        'от кого',
+        'приглашение',
+        'откуда'
+      ],
+      specialization: [
+        'специальность',
+        'специализация'
+      ],
+      format: [
+        'формат',
+        'тариф'
+      ],
+      phone: [
+        'телефон',
+        'phone',
+        'тел.'
+      ],
+      name2: [
+        'фио 2',
+        'фио2',
+        'фио (2)',
+        'участник 2 фио',
+        'участник 2',
+        'участник2',
+        'второй участник',
+        'фио второго',
+        'фио второго участника',
+        '2 участник',
+        'участник №2'
+      ],
+      email2: [
+        'почта 2',
+        'почта2',
+        'email 2',
+        'email2',
+        'e-mail 2',
+        'эл. почта 2',
+        'эл почта 2',
+        'почта второго'
+      ],
+      phone2: [
+        'телефон 2',
+        'телефон2',
+        'phone 2',
+        'тел 2',
+        'тел. 2',
+        'телефон второго'
+      ],
+      social2: [
+        'аккаунт 2',
+        'аккаунт2',
+        'соц 2',
+        'соцсети 2',
+        'соц.сети 2',
+        'аккаунт второго'
+      ],
+      date: [
+        'дата',
+        'date',
+        'время'
+      ],
+      price: [
+        'стоимость',
+        'цена',
+        'price',
+        'сумма'
+      ],
+      paymentStatus: [
+        'статус оплаты',
+        'статус',
+        'оплата'
+      ]
     };
 
-    function findCol(candidates) {
-      for (var i = 0; i < headers.length; i++) {
-        var h = String(headers[i] || '').trim().toLowerCase();
+    function findColExact(candidates) {
+      var i;
+      var j;
+      for (i = 0; i < headers.length; i++) {
+        var h = normHeader(headers[i]);
         if (!h) continue;
-        for (var j = 0; j < candidates.length; j++) {
+        for (j = 0; j < candidates.length; j++) {
           if (h === candidates[j]) return i + 1;
+        }
+      }
+      return -1;
+    }
+
+    /**
+     * Для колонок второго участника — если точного совпадения нет, ищем заголовок,
+     * где есть «2»/«втор» и ключевое слово поля (узко, чтобы не перепутать с др. колонками).
+     */
+    function findColPairFuzzy(key) {
+      var i;
+      var h;
+      var has2;
+      for (i = 0; i < headers.length; i++) {
+        h = normHeader(headers[i]);
+        if (!h) continue;
+        has2 = (h.indexOf('2') !== -1) || /втор|№\s*2/i.test(h);
+        if (!has2 && h.indexOf('2') === -1) continue;
+        if (key === 'name2') {
+          if ((/фио|имя|участник/.test(h)) && !/почта|email|эл\.|тел|аккаунт|соц|phone/.test(h)) return i + 1;
+        } else if (key === 'email2') {
+          if (/почта|email|e-mail|эл/.test(h) && !/тел|фио|аккаунт|соц/.test(h)) return i + 1;
+        } else if (key === 'phone2') {
+          if (/тел|phone/.test(h) && !/почта|фио|email|аккаунт/.test(h)) return i + 1;
+        } else if (key === 'social2') {
+          if (/аккаунт|соц|соцсети/.test(h) && !/почта|тел|фио|email/.test(h)) return i + 1;
         }
       }
       return -1;
@@ -53,8 +173,30 @@ function doPost(e) {
 
     var cols = {};
     Object.keys(headerMap).forEach(function (key) {
-      cols[key] = findCol(headerMap[key]);
+      var idx = findColExact(headerMap[key]);
+      if (idx < 0 && (key === 'name2' || key === 'email2' || key === 'phone2' || key === 'social2')) {
+        idx = findColPairFuzzy(key);
+      }
+      cols[key] = idx;
     });
+
+    var pairDefaults = {
+      name2: 'ФИО 2',
+      email2: 'почта 2',
+      phone2: 'телефон 2',
+      social2: 'аккаунт 2'
+    };
+    var pairOrder = ['name2', 'email2', 'phone2', 'social2'];
+
+    pairOrder.forEach(function (pk) {
+      if (cols[pk] > 0) return;
+      var c = Math.max(sheet.getLastColumn(), 0) + 1;
+      sheet.getRange(1, c).setValue(pairDefaults[pk]);
+      cols[pk] = c;
+    });
+
+    lastCol = Math.max(sheet.getLastColumn(), 1);
+    headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
 
     var nextRow = sheet.getLastRow() + 1;
     var rowValues = new Array(lastCol).fill('');

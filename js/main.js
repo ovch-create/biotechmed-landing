@@ -323,6 +323,9 @@ function initModal() {
   function cleanPayment() {
     const oldPayment = overlay.querySelector('.modal__payment');
     if (oldPayment) oldPayment.remove();
+    overlay.classList.remove('modal-overlay--payment');
+    const modalEl = overlay.querySelector('.modal');
+    if (modalEl) modalEl.classList.remove('modal--has-payment');
   }
 
   const pairBlock = document.getElementById('modal-pair-fields');
@@ -404,16 +407,34 @@ function initModal() {
   function buildWidgetSrcdoc(plan) {
     const sid = plan.widgetScriptId || '';
     const src = plan.widgetScriptSrc || '';
-    return `<!doctype html><html><head><meta charset="utf-8"><base target="_top">
+    return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base target="_top">
 <style>
   html,body{margin:0;padding:0;background:#fff;color:#111;font:14px/1.45 -apple-system,Segoe UI,Roboto,Arial,sans-serif;}
-  body{padding:14px 14px 24px;overflow-y:auto;}
+  html,body{min-height:100%;}
+  body{padding:14px 14px 40px;overflow-x:hidden;}
   a{color:#0369a1;}
-  .gc-loading{color:#666;text-align:center;padding:20px 0;}
+  .gc-loading{color:#666;text-align:center;padding:16px 8px;font-size:14px;}
+  .gc-loading.is-hidden{display:none !important;}
 </style>
 </head><body>
-<div class="gc-loading">Загружаем форму оплаты…</div>
+<div class="gc-loading" id="gc-loader" role="status">Загружаем форму оплаты…</div>
 <script id="${sid}" src="${src}"></script>
+<script>
+(function(){
+  var el=document.getElementById('gc-loader');
+  function hide(){ if(el){ el.classList.add('is-hidden'); el.setAttribute('aria-hidden','true'); } }
+  function maybeHide(){
+    if(document.querySelector('form input,form select,form textarea,form button')){ hide(); return true; }
+    return false;
+  }
+  window.addEventListener('load',function(){ setTimeout(function(){ maybeHide()||hide(); },400); });
+  setTimeout(hide,12000);
+  try{
+    var ob=new MutationObserver(function(){ if(maybeHide()) ob.disconnect(); });
+    ob.observe(document.documentElement,{childList:true,subtree:true});
+  }catch(e){}
+})();
+</script>
 </body></html>`;
   }
 
@@ -430,16 +451,24 @@ function initModal() {
         <p class="modal__payment-text">Осталось оплатить участие. Введите данные в форму оплаты ниже — она сформирует чек и переведёт на страницу оплаты.</p>
       </div>
       <div class="modal__payment-widget" id="modal-payment-widget"></div>
-      <p class="modal__payment-fallback">Форма не загружается? Напишите на <a href="mailto:support@anagran.ru">support@anagran.ru</a></p>
+      <p class="modal__payment-fallback">Если форма обрезана — прокрутите окно вниз. Не открывается полностью — напишите на <a href="mailto:support@anagran.ru">support@anagran.ru</a></p>
     `;
     modal.appendChild(wrap);
+
+    overlay.classList.add('modal-overlay--payment');
+    const modalEl = overlay.querySelector('.modal');
+    if (modalEl) modalEl.classList.add('modal--has-payment');
 
     if (plan && plan.widgetScriptSrc) {
       const target = wrap.querySelector('#modal-payment-widget');
       const iframe = document.createElement('iframe');
-      iframe.className = 'modal__payment-iframe';
-      iframe.setAttribute('loading', 'lazy');
+      iframe.className = 'modal__payment-iframe' + (plan.pairForm ? ' modal__payment-iframe--pair' : '');
       iframe.setAttribute('title', 'Форма оплаты GetCourse');
+      iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+      iframe.setAttribute(
+        'allow',
+        'payment *; publickey-credentials-get *; clipboard-write; fullscreen'
+      );
       iframe.srcdoc = buildWidgetSrcdoc(plan);
       target.appendChild(iframe);
     }

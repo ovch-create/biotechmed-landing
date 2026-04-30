@@ -1594,6 +1594,27 @@ section { padding: 96px 0; }
   transform: translateY(0) scale(1);
 }
 
+.modal-overlay--payment {
+  align-items: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  padding-top: 16px;
+  padding-bottom: max(24px, env(safe-area-inset-bottom, 24px));
+}
+
+.modal-overlay--payment .modal--has-payment {
+  max-height: none;
+  overflow: visible;
+  margin-bottom: 32px;
+}
+
+.modal-overlay--payment.active .modal--has-payment {
+  transform: translateY(0) scale(1);
+}
+
 .modal__close {
   position: absolute;
   top: 16px;
@@ -1810,13 +1831,20 @@ section { padding: 96px 0; }
 .modal__payment-iframe {
   display: block;
   width: 100%;
-  height: 1150px;
+  height: 1500px;
   border: 0;
   background: #fff;
 }
 
+/* Тариф «на двоих» — форма GetCourse длинная; высота с запасом */
+.modal__payment-iframe--pair {
+  height: 3200px;
+  min-height: 2000px;
+}
+
 @media (max-width: 480px) {
-  .modal__payment-iframe { height: 1350px; }
+  .modal__payment-iframe { height: 1800px; }
+  .modal__payment-iframe--pair { height: 3800px; }
 }
 
 .modal__payment-fallback {
