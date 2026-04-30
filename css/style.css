@@ -138,6 +138,32 @@ section { padding: 96px 0; }
   box-shadow: 0 10px 32px rgba(14, 165, 233, 0.28);
 }
 
+/* БиотехМед вместе — таблетка с голубой обводкой, плоский фон без градиента */
+.btn--vmeste {
+  background: transparent;
+  color: var(--blue-ll);
+  border: 1.5px solid rgba(56, 189, 248, 0.72);
+  box-shadow: none;
+  font-weight: 700;
+}
+.btn--vmeste:hover {
+  background: rgba(14, 165, 233, 0.12);
+  border-color: #7dd3fc;
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: none;
+}
+
+.hero__cta .btn--about.btn--ghost {
+  color: rgba(255, 255, 255, 0.92);
+  border: 1.5px solid rgba(255, 255, 255, 0.38);
+  font-weight: 700;
+}
+.hero__cta .btn--about.btn--ghost:hover {
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 /* Светлая карточка тарифа — тот же голубой акцент */
 .price-card--hl .btn--outline {
   color: #0369a1;
@@ -229,6 +255,14 @@ section { padding: 96px 0; }
   font-size: 13px;
   color: var(--t-muted);
   font-variant-numeric: tabular-nums;
+}
+
+.nav__cta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 /* ===== HERO ===== */
