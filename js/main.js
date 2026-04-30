@@ -451,7 +451,7 @@ function initModal() {
         <p class="modal__payment-text">Осталось оплатить участие. Введите данные в форму оплаты ниже — она сформирует чек и переведёт на страницу оплаты.</p>
       </div>
       <div class="modal__payment-widget" id="modal-payment-widget"></div>
-      <p class="modal__payment-fallback">Если форма обрезана — прокрутите окно вниз. Не открывается полностью — напишите на <a href="mailto:support@anagran.ru">support@anagran.ru</a></p>
+      <p class="modal__payment-fallback">Все поля и кнопка — внутри белой области; при длинной форме прокрутите её или всё окно. Проблемы с оплатой — <a href="mailto:support@anagran.ru">support@anagran.ru</a></p>
     `;
     modal.appendChild(wrap);
 

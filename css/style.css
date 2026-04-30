@@ -1823,28 +1823,35 @@ section { padding: 96px 0; }
   background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  min-height: 340px;
+  min-height: 0;
   color: #111;
   position: relative;
 }
 
+/* Высота от окна, без «простыни» из тысяч px — лишнее белое уходит; скролл внутри iframe */
 .modal__payment-iframe {
   display: block;
   width: 100%;
-  height: 1500px;
+  height: min(68vh, 640px);
+  min-height: 260px;
   border: 0;
   background: #fff;
 }
 
-/* Тариф «на двоих» — форма GetCourse длинная; высота с запасом */
 .modal__payment-iframe--pair {
-  height: 3200px;
-  min-height: 2000px;
+  height: min(78vh, 980px);
+  min-height: 360px;
 }
 
 @media (max-width: 480px) {
-  .modal__payment-iframe { height: 1800px; }
-  .modal__payment-iframe--pair { height: 3800px; }
+  .modal__payment-iframe {
+    height: min(62vh, 560px);
+    min-height: 240px;
+  }
+  .modal__payment-iframe--pair {
+    height: min(72vh, 820px);
+    min-height: 320px;
+  }
 }
 
 .modal__payment-fallback {
