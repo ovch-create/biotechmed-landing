@@ -278,7 +278,7 @@ function renderPricing() {
           ${p.features.map(f => `<li class="price-card__feat">${f}</li>`).join('')}
         </ul>
         ${warning}
-        <button type="button" class="btn ${btnStyle} js-open-modal" data-plan="${i}">${p.cta}</button>
+        <button type="button" class="btn ${btnStyle} btn--disabled" disabled aria-disabled="true">Продажи завершены</button>
       </div>
     `;
   }).join('');
