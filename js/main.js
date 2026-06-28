@@ -83,7 +83,7 @@ function initCanvas() {
       ctx.beginPath();
       ctx.moveTo(center.sx, center.sy);
       ctx.lineTo(a.sx, a.sy);
-      ctx.strokeStyle = `rgba(56,189,248,${alpha})`;
+      ctx.strokeStyle = `rgba(216,162,74,${alpha})`;
       ctx.lineWidth = 1.6;
       ctx.stroke();
     }
@@ -95,24 +95,24 @@ function initCanvas() {
 
       /* outer glow */
       const glow = ctx.createRadialGradient(atom.sx, atom.sy, 0, atom.sx, atom.sy, r * 2.8);
-      glow.addColorStop(0, `rgba(14,165,233,${alpha * 0.22})`);
+      glow.addColorStop(0, `rgba(216,162,74,${alpha * 0.24})`);
       glow.addColorStop(1, 'transparent');
       ctx.beginPath(); ctx.arc(atom.sx, atom.sy, r * 2.8, 0, Math.PI * 2);
       ctx.fillStyle = glow; ctx.fill();
 
-      /* glass sphere */
+      /* glass sphere — тёплое золото */
       const hx = atom.sx - r * 0.33, hy = atom.sy - r * 0.33;
       const grad = ctx.createRadialGradient(hx, hy, r * 0.04, atom.sx, atom.sy, r);
-      grad.addColorStop(0,    `rgba(230,248,255,${alpha * 0.75})`);
-      grad.addColorStop(0.3,  `rgba(14,165,233,${alpha * 0.82})`);
-      grad.addColorStop(0.72, `rgba(3,105,161,${alpha * 0.65})`);
-      grad.addColorStop(1,    `rgba(2,25,55,${alpha * 0.45})`);
+      grad.addColorStop(0,    `rgba(255,244,220,${alpha * 0.85})`);
+      grad.addColorStop(0.3,  `rgba(232,190,106,${alpha * 0.85})`);
+      grad.addColorStop(0.72, `rgba(154,110,34,${alpha * 0.6})`);
+      grad.addColorStop(1,    `rgba(40,28,8,${alpha * 0.45})`);
       ctx.beginPath(); ctx.arc(atom.sx, atom.sy, r, 0, Math.PI * 2);
       ctx.fillStyle = grad; ctx.fill();
 
-      /* rim */
+      /* rim — голубой блик узла (как на референсе) */
       ctx.beginPath(); ctx.arc(atom.sx, atom.sy, r, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(56,189,248,${alpha * 0.38})`;
+      ctx.strokeStyle = `rgba(78,201,240,${alpha * 0.42})`;
       ctx.lineWidth = 0.7; ctx.stroke();
     });
   };
@@ -152,7 +152,7 @@ function initCanvas() {
     /* background dots (very subtle) */
     molecules.dots.forEach(p => {
       ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(56,189,248,0.18)'; ctx.fill();
+      ctx.fillStyle = 'rgba(78,201,240,0.22)'; ctx.fill();
       p.x += p.vx; p.y += p.vy;
       if (p.x < 0 || p.x > w) p.vx *= -1;
       if (p.y < 0 || p.y > h) p.vy *= -1;
@@ -278,7 +278,7 @@ function renderPricing() {
           ${p.features.map(f => `<li class="price-card__feat">${f}</li>`).join('')}
         </ul>
         ${warning}
-        <button type="button" class="btn ${btnStyle} btn--disabled" disabled aria-disabled="true">Продажи завершены</button>
+        <button type="button" class="btn ${btnStyle} js-open-modal" data-plan="${i}">${p.cta || 'Занять место в зале'}</button>
       </div>
     `;
   }).join('');
