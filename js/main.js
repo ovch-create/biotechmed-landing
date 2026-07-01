@@ -11,168 +11,161 @@ document.addEventListener('DOMContentLoaded', () => {
   initModal();
 });
 
-/* ===== CANVAS — 3D FLOATING MOLECULES ===== */
+/* ===== CANVAS — НЕЙРОННАЯ СЕТЬ (connected nodes) ===== */
 function initCanvas() {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let w, h, molecules, raf;
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let w, h, nodes, bokeh, LINK, raf, t = 0;
+  const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
 
-  /* --- 3D rotation helpers --- */
-  function rotX(p, a) {
-    return { x: p.x, y: p.y * Math.cos(a) - p.z * Math.sin(a), z: p.y * Math.sin(a) + p.z * Math.cos(a) };
-  }
-  function rotY(p, a) {
-    return { x: p.x * Math.cos(a) + p.z * Math.sin(a), y: p.y, z: -p.x * Math.sin(a) + p.z * Math.cos(a) };
-  }
-  function rotZ(p, a) {
-    return { x: p.x * Math.cos(a) - p.y * Math.sin(a), y: p.x * Math.sin(a) + p.y * Math.cos(a), z: p.z };
-  }
+  function rand(a, b) { return a + Math.random() * (b - a); }
 
-  /* --- Molecule class --- */
-  function Mol(cx, cy, scale) {
-    this.cx = cx; this.cy = cy;
-    this.vx = (Math.random() - 0.5) * 0.38;
-    this.vy = (Math.random() - 0.5) * 0.38;
-    this.scale = scale;
-    this.ax = Math.random() * Math.PI * 2;
-    this.ay = Math.random() * Math.PI * 2;
-    this.az = Math.random() * Math.PI * 2;
-    this.dax = (Math.random() - 0.5) * 0.014;
-    this.day = (Math.random() - 0.5) * 0.011;
-    this.daz = (Math.random() - 0.5) * 0.009;
-    /* Tetrahedral atom positions (normalised) */
-    this.base = [
-      { x: 0,     y: 0,      z: 0,     r: 1.0 },
-      { x: 0,     y: 0,      z: 1,     r: 0.62 },
-      { x: 0.94,  y: 0,      z: -0.33, r: 0.62 },
-      { x: -0.47, y:  0.82,  z: -0.33, r: 0.62 },
-      { x: -0.47, y: -0.82,  z: -0.33, r: 0.62 },
-    ];
-  }
-
-  Mol.prototype.project = function () {
-    const fov = 5;
-    return this.base.map(a => {
-      let p = rotX({ x: a.x, y: a.y, z: a.z }, this.ax);
-      p = rotY(p, this.ay);
-      p = rotZ(p, this.az);
-      const d = fov / (fov + p.z);
-      return { sx: this.cx + p.x * this.scale * d, sy: this.cy + p.y * this.scale * d,
-               sr: a.r * this.scale * 0.22 * d, depth: p.z };
+  function build() {
+    const count = Math.min(150, Math.max(40, Math.round((w * h) / 13000)));
+    LINK = w < 760 ? 115 : 155;
+    nodes = Array.from({ length: count }, () => {
+      const z = Math.random();                       /* глубина: 1 — ближе */
+      return {
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: rand(-0.18, 0.18) * (0.4 + z),
+        vy: rand(-0.18, 0.18) * (0.4 + z),
+        z,
+        r: 0.6 + z * 2.4,
+        gold: Math.random() < 0.14,
+        ph: rand(0, Math.PI * 2),
+        sp: rand(0.6, 1.8)
+      };
     });
-  };
 
-  Mol.prototype.update = function () {
-    this.cx += this.vx; this.cy += this.vy;
-    this.ax += this.dax; this.ay += this.day; this.az += this.daz;
-    const m = this.scale * 2.2;
-    if (this.cx < m || this.cx > w - m) this.vx *= -1;
-    if (this.cy < m || this.cy > h - m) this.vy *= -1;
-  };
-
-  Mol.prototype.draw = function (ctx) {
-    const pts = this.project();
-    const center = pts[0];
-    const sorted = [...pts].sort((a, b) => a.depth - b.depth);
-
-    /* bonds */
-    for (let i = 1; i < pts.length; i++) {
-      const a = pts[i];
-      const alpha = Math.max(0.12, Math.min(0.55, 0.3 + (a.depth + 1) * 0.15));
-      ctx.beginPath();
-      ctx.moveTo(center.sx, center.sy);
-      ctx.lineTo(a.sx, a.sy);
-      ctx.strokeStyle = `rgba(216,162,74,${alpha})`;
-      ctx.lineWidth = 1.6;
-      ctx.stroke();
-    }
-
-    /* atoms */
-    sorted.forEach(atom => {
-      const r = Math.max(2.5, atom.sr);
-      const alpha = Math.max(0.25, Math.min(0.92, 0.45 + (atom.depth + 1) * 0.22));
-
-      /* outer glow */
-      const glow = ctx.createRadialGradient(atom.sx, atom.sy, 0, atom.sx, atom.sy, r * 2.8);
-      glow.addColorStop(0, `rgba(216,162,74,${alpha * 0.24})`);
-      glow.addColorStop(1, 'transparent');
-      ctx.beginPath(); ctx.arc(atom.sx, atom.sy, r * 2.8, 0, Math.PI * 2);
-      ctx.fillStyle = glow; ctx.fill();
-
-      /* glass sphere — тёплое золото */
-      const hx = atom.sx - r * 0.33, hy = atom.sy - r * 0.33;
-      const grad = ctx.createRadialGradient(hx, hy, r * 0.04, atom.sx, atom.sy, r);
-      grad.addColorStop(0,    `rgba(255,244,220,${alpha * 0.85})`);
-      grad.addColorStop(0.3,  `rgba(232,190,106,${alpha * 0.85})`);
-      grad.addColorStop(0.72, `rgba(154,110,34,${alpha * 0.6})`);
-      grad.addColorStop(1,    `rgba(40,28,8,${alpha * 0.45})`);
-      ctx.beginPath(); ctx.arc(atom.sx, atom.sy, r, 0, Math.PI * 2);
-      ctx.fillStyle = grad; ctx.fill();
-
-      /* rim — голубой блик узла (как на референсе) */
-      ctx.beginPath(); ctx.arc(atom.sx, atom.sy, r, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(78,201,240,${alpha * 0.42})`;
-      ctx.lineWidth = 0.7; ctx.stroke();
-    });
-  };
-
-  /* --- Subtle background dots --- */
-  function makeDots() {
-    const count = Math.min(50, Math.floor((w * h) / 18000));
-    return Array.from({ length: count }, () => ({
-      x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.18, vy: (Math.random() - 0.5) * 0.18,
-      r: Math.random() * 0.9 + 0.3,
+    const bcount = w < 760 ? 5 : 11;
+    bokeh = Array.from({ length: bcount }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: rand(-0.06, 0.06),
+      vy: rand(-0.06, 0.06),
+      r: rand(40, 130),
+      a: rand(0.04, 0.13),
+      gold: Math.random() < 0.4,
+      ph: rand(0, Math.PI * 2),
+      sp: rand(0.3, 0.8)
     }));
   }
 
   function resize() {
-    w = canvas.width  = canvas.offsetWidth;
+    w = canvas.width = canvas.offsetWidth;
     h = canvas.height = canvas.offsetHeight;
+    mouse.x = mouse.tx = w / 2;
+    mouse.y = mouse.ty = h / 2;
+    build();
   }
 
-  function makeMolecules() {
-    const count = w < 600 ? 3 : 6;
-    const margin = 120;
-    molecules = { mols: [], dots: makeDots() };
-    for (let i = 0; i < count; i++) {
-      const scale = 32 + Math.random() * 28;
-      molecules.mols.push(new Mol(
-        margin + Math.random() * (w - margin * 2),
-        margin + Math.random() * (h - margin * 2),
-        scale
-      ));
-    }
-  }
-
-  function draw() {
+  function frame() {
     ctx.clearRect(0, 0, w, h);
 
-    /* background dots (very subtle) */
-    molecules.dots.forEach(p => {
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(78,201,240,0.22)'; ctx.fill();
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-    });
+    mouse.x += (mouse.tx - mouse.x) * 0.05;
+    mouse.y += (mouse.ty - mouse.y) * 0.05;
+    const ox = (mouse.x - w / 2) * 0.02;
+    const oy = (mouse.y - h / 2) * 0.02;
 
-    /* molecules */
-    molecules.mols.forEach(m => { m.update(); m.draw(ctx); });
+    /* --- боке (глубина резкости) --- */
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < bokeh.length; i++) {
+      const b = bokeh[i];
+      b.x += b.vx; b.y += b.vy;
+      if (b.x < -b.r) b.x = w + b.r;
+      if (b.x > w + b.r) b.x = -b.r;
+      if (b.y < -b.r) b.y = h + b.r;
+      if (b.y > h + b.r) b.y = -b.r;
+      const pa = b.a * (0.7 + 0.3 * Math.sin(t * b.sp + b.ph));
+      const col = b.gold ? '120,210,245' : '206,232,248';
+      const bx = b.x + ox * 3, by = b.y + oy * 3;
+      const g = ctx.createRadialGradient(bx, by, 0, bx, by, b.r);
+      g.addColorStop(0, 'rgba(' + col + ',' + pa + ')');
+      g.addColorStop(1, 'rgba(' + col + ',0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(bx, by, b.r, 0, Math.PI * 2); ctx.fill();
+    }
 
-    raf = requestAnimationFrame(draw);
+    /* позиции узлов с параллаксом по глубине */
+    const px = [], py = [];
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0) n.x = w; if (n.x > w) n.x = 0;
+      if (n.y < 0) n.y = h; if (n.y > h) n.y = 0;
+      px[i] = n.x + ox * (0.3 + n.z * 1.7);
+      py[i] = n.y + oy * (0.3 + n.z * 1.7);
+    }
+
+    /* --- связи между близкими узлами --- */
+    ctx.globalCompositeOperation = 'source-over';
+    const L2 = LINK * LINK;
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = px[i] - px[j], dy = py[i] - py[j];
+        const d2 = dx * dx + dy * dy;
+        if (d2 < L2) {
+          const d = Math.sqrt(d2);
+          const a = (1 - d / LINK) * 0.30 * (0.4 + (nodes[i].z + nodes[j].z) * 0.3);
+          ctx.strokeStyle = 'rgba(125,205,240,' + a + ')';
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          ctx.moveTo(px[i], py[i]);
+          ctx.lineTo(px[j], py[j]);
+          ctx.stroke();
+        }
+      }
+    }
+
+    /* --- свечение узлов --- */
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      const tw = 0.6 + 0.4 * Math.sin(t * n.sp + n.ph);
+      const r = n.r;
+      const col = n.gold ? '120,210,245' : '206,236,252';
+      const g = ctx.createRadialGradient(px[i], py[i], 0, px[i], py[i], r * 4.5);
+      g.addColorStop(0, 'rgba(' + col + ',' + (0.5 * tw * (0.5 + n.z)) + ')');
+      g.addColorStop(1, 'rgba(' + col + ',0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(px[i], py[i], r * 4.5, 0, Math.PI * 2); ctx.fill();
+    }
+
+    /* --- ядра узлов --- */
+    ctx.globalCompositeOperation = 'source-over';
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      const tw = 0.6 + 0.4 * Math.sin(t * n.sp + n.ph);
+      ctx.fillStyle = n.gold
+        ? 'rgba(190,235,255,' + (0.9 * tw) + ')'
+        : 'rgba(255,255,255,' + (0.85 * tw) + ')';
+      ctx.beginPath(); ctx.arc(px[i], py[i], n.r * 0.75, 0, Math.PI * 2); ctx.fill();
+    }
+
+    t += 0.016;
+    raf = requestAnimationFrame(frame);
   }
 
   resize();
-  makeMolecules();
-  draw();
+  window.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.tx = e.clientX - rect.left;
+    mouse.ty = e.clientY - rect.top;
+  });
+
+  if (reduce) {
+    t = 12; frame(); cancelAnimationFrame(raf);
+  } else {
+    frame();
+  }
 
   window.addEventListener('resize', () => {
     cancelAnimationFrame(raf);
     resize();
-    makeMolecules();
-    draw();
+    if (!reduce) frame();
   });
 }
 

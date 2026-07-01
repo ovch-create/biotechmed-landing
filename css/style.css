@@ -6,15 +6,13 @@
   --bg-card:   rgba(255,255,255,0.035);
   --bg-card-h: rgba(255,255,255,0.065);
 
-  /* Тёплое золото low-poly мозга на тёмном фоне (референс) */
-  --blue:      #D8A24A;
-  --blue-l:    #E8BE6A;
-  --blue-ll:   #F4DCA2;
-  --blue-dark: #9A6E22;
-  --blue-dim:  rgba(216,162,74,0.10);
-  --blue-glow: rgba(216,162,74,0.24);
-  --blue-bdr:  rgba(216,162,74,0.26);
-  --cyan:      #4EC9F0;
+  --blue:      #0EA5E9;
+  --blue-l:    #38BDF8;
+  --blue-ll:   #7DD3FC;
+  --blue-dark: #0369A1;
+  --blue-dim:  rgba(14,165,233,0.10);
+  --blue-glow: rgba(14,165,233,0.22);
+  --blue-bdr:  rgba(14,165,233,0.22);
 
   --white:     #FFFFFF;
   --t:         rgba(255,255,255,0.85);
@@ -127,30 +125,30 @@ section { padding: 96px 0; }
 }
 
 .btn--outline {
-  background: rgba(216,162,74, 0.16);
+  background: rgba(14,165,233, 0.16);
   color: var(--blue-ll);
   border: 2px solid var(--blue-l);
-  box-shadow: 0 0 0 1px rgba(216,162,74, 0.15), 0 6px 22px var(--blue-glow);
+  box-shadow: 0 0 0 1px rgba(14,165,233, 0.15), 0 6px 22px var(--blue-glow);
 }
 .btn--outline:hover {
-  border-color: #f4dca2;
+  border-color: #7dd3fc;
   color: var(--white);
-  background: rgba(216,162,74, 0.28);
+  background: rgba(14,165,233, 0.28);
   transform: translateY(-2px);
-  box-shadow: 0 10px 32px rgba(216,162,74, 0.28);
+  box-shadow: 0 10px 32px rgba(14,165,233, 0.28);
 }
 
 /* БиотехМед вместе — таблетка с голубой обводкой, плоский фон без градиента */
 .btn--vmeste {
   background: transparent;
   color: var(--blue-ll);
-  border: 1.5px solid rgba(232,190,106, 0.72);
+  border: 1.5px solid rgba(56,189,248, 0.72);
   box-shadow: none;
   font-weight: 700;
 }
 .btn--vmeste:hover {
-  background: rgba(216,162,74, 0.12);
-  border-color: #f4dca2;
+  background: rgba(14,165,233, 0.12);
+  border-color: #7dd3fc;
   color: var(--white);
   transform: translateY(-1px);
   box-shadow: none;
@@ -169,13 +167,13 @@ section { padding: 96px 0; }
 /* Светлая карточка тарифа — тот же голубой акцент */
 .price-card--hl .btn--outline {
   color: #0369a1;
-  border-color: #d8a24a;
-  background: rgba(216,162,74, 0.12);
-  box-shadow: 0 2px 12px rgba(216,162,74, 0.12);
+  border-color: #0ea5e9;
+  background: rgba(14,165,233, 0.12);
+  box-shadow: 0 2px 12px rgba(14,165,233, 0.12);
 }
 .price-card--hl .btn--outline:hover {
-  border-color: #e8be6a;
-  background: rgba(216,162,74, 0.2);
+  border-color: #38bdf8;
+  background: rgba(14,165,233, 0.2);
   color: #0c4a6e;
 }
 
@@ -197,16 +195,16 @@ section { padding: 96px 0; }
 }
 
 .btn--tg {
-  background: rgba(216,162,74,0.12);
+  background: rgba(14,165,233,0.12);
   color: var(--blue-ll);
   border: 1px solid var(--blue-bdr);
 }
 .btn--tg:hover {
-  background: rgba(216,162,74,0.2);
+  background: rgba(14,165,233,0.2);
   border-color: var(--blue-l);
   color: var(--white);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(216,162,74,0.18);
+  box-shadow: 0 8px 24px rgba(14,165,233,0.18);
 }
 
 /* ===== NAVBAR ===== */
@@ -319,7 +317,7 @@ section { padding: 96px 0; }
   right: -10%;
   width: 60vw;
   height: 60vw;
-  background: radial-gradient(circle, rgba(216,162,74,0.12) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(14,165,233,0.12) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -329,7 +327,7 @@ section { padding: 96px 0; }
   left: -5%;
   width: 40vw;
   height: 40vw;
-  background: radial-gradient(circle, rgba(154,110,34,0.10) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(3,105,161,0.10) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -776,7 +774,7 @@ section { padding: 96px 0; }
   right: -10%;
   width: 55%;
   height: 200%;
-  background: radial-gradient(ellipse, rgba(216,162,74,0.09) 0%, transparent 65%);
+  background: radial-gradient(ellipse, rgba(14,165,233,0.09) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -787,7 +785,7 @@ section { padding: 96px 0; }
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(216,162,74,0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(14,165,233,0.3), transparent);
 }
 
 .speakers__visual-inner {
@@ -1096,8 +1094,8 @@ section { padding: 96px 0; }
 /* Promo teaser — заметный блок по центру, синий тон + лёгкий оранжевый акцент */
 .promo-teaser {
   padding: 32px 0;
-  background: linear-gradient(180deg, rgba(216,162,74, 0.07) 0%, var(--bg-2) 45%, rgba(7, 14, 28, 0.65) 100%);
-  border-top: 1px solid rgba(232,190,106, 0.22);
+  background: linear-gradient(180deg, rgba(14,165,233, 0.07) 0%, var(--bg-2) 45%, rgba(7, 14, 28, 0.65) 100%);
+  border-top: 1px solid rgba(56,189,248, 0.22);
   border-bottom: 1px solid var(--border);
 }
 .promo-teaser__inner {
@@ -1108,11 +1106,11 @@ section { padding: 96px 0; }
   text-align: center;
   background: rgba(7, 14, 28, 0.55);
   border-radius: var(--radius-lg);
-  border: 2px solid rgba(232,190,106, 0.58);
+  border: 2px solid rgba(56,189,248, 0.58);
   box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.35),
-    inset 0 0 0 1px rgba(216,162,74, 0.12),
-    0 0 24px rgba(216,162,74, 0.08);
+    inset 0 0 0 1px rgba(14,165,233, 0.12),
+    0 0 24px rgba(14,165,233, 0.08);
 }
 .promo-teaser__text {
   margin: 0;
@@ -1141,14 +1139,14 @@ section { padding: 96px 0; }
   border: 1px solid rgba(125, 211, 252, 0.45);
   cursor: pointer;
   transition: var(--tr);
-  background: linear-gradient(135deg, #b9842f 0%, var(--blue) 45%, var(--blue-l) 100%);
+  background: linear-gradient(135deg, #0284c7 0%, var(--blue) 45%, var(--blue-l) 100%);
   box-shadow: 0 6px 24px var(--blue-glow), 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 .promo-teaser__btn:hover {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-l) 60%, #f4dca2 100%);
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-l) 60%, #7dd3fc 100%);
   border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(216,162,74, 0.35);
+  box-shadow: 0 10px 28px rgba(14,165,233, 0.35);
 }
 
 .pricing__grid {
@@ -1267,7 +1265,7 @@ section { padding: 96px 0; }
   transform: translate(-50%, -50%);
   width: 700px;
   height: 300px;
-  background: radial-gradient(ellipse, rgba(216,162,74,0.08) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(14,165,233,0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -1319,7 +1317,7 @@ section { padding: 96px 0; }
 }
 
 .tg-block__inner {
-  background: linear-gradient(145deg, rgba(216,162,74,0.08) 0%, rgba(154,110,34,0.04) 100%);
+  background: linear-gradient(145deg, rgba(14,165,233,0.08) 0%, rgba(3,105,161,0.04) 100%);
   border: 1px solid var(--blue-bdr);
   border-radius: var(--radius-lg);
   padding: 56px 52px;
@@ -1340,7 +1338,7 @@ section { padding: 96px 0; }
   transform: translateX(-50%);
   width: 600px;
   height: 400px;
-  background: radial-gradient(ellipse, rgba(216,162,74,0.1) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(14,165,233,0.1) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -1529,7 +1527,7 @@ section { padding: 96px 0; }
   height: 48px;
   border-radius: 50%;
   border: 2px solid var(--blue-bdr);
-  background: rgba(216,162,74, 0.08);
+  background: rgba(14,165,233, 0.08);
   color: var(--blue-l);
   font-weight: 800;
   font-size: 17px;
@@ -2436,27 +2434,30 @@ section { padding: 96px 0; }
 }
 
 
-/* ===== ТЁМНО-ЗОЛОТАЯ ТЕМА (референс «Мозг») — переопределения контраста ===== */
-/* Золотые кнопки: тёмный текст для контраста на золоте */
-.btn--blue { color: #14110A; font-weight: 700; }
-.btn--blue:hover { color: #14110A; }
+/* (тёмно-золотой оверрайд убран — откат к бирюзовому оформлению; выделенный тариф снова использует базовую белую карточку) */
 
-/* Выделенный тариф: тёмная карточка с золотым акцентом вместо белой */
-.price-card--hl {
-  background: linear-gradient(160deg, rgba(216,162,74,0.12) 0%, var(--bg-card) 60%);
-  border-color: var(--blue-bdr);
-  color: var(--t);
-  box-shadow: 0 0 0 1px var(--blue-bdr), 0 22px 60px rgba(0,0,0,0.45);
+/* ===== HERO: читаемость текста поверх яркой нейронной вспышки ===== */
+.hero__content { position: relative; z-index: 2; }
+.hero__overline,
+.hero__title,
+.hero__subtitle { text-shadow: 0 2px 30px rgba(4,9,17,0.9), 0 1px 5px rgba(4,9,17,0.7); }
+
+/* (премиальный оверрайд кнопок убран — кнопки как были до правок: базовый плоский бирюзовый .btn--blue) */
+
+/* ===== Крупные карточки ведущих (Фомин / Королёв) ===== */
+.hosts { gap: 24px; margin-bottom: 56px; }
+.host-card { align-items: flex-start; gap: 26px; padding: 30px 34px; }
+.host-card__photo { width: 104px; height: 104px; }
+.host-card__role { font-size: 13px; margin-bottom: 8px; }
+.host-card__name { font-size: 24px; line-height: 1.2; }
+.host-card__cred {
+  font-size: 14px;
+  color: var(--t-muted);
+  line-height: 1.6;
+  margin-top: 10px;
 }
-.price-card--hl .price-card__title   { color: var(--white); }
-.price-card--hl .price-card__sub     { color: var(--blue-l); }
-.price-card--hl .price-card__price   { color: var(--white); }
-.price-card--hl .price-card__note-sm { color: var(--t-muted); }
-.price-card--hl .price-card__divider { background: var(--border-m); }
-.price-card--hl .price-card__feat    { color: var(--t); }
-.price-card--hl .price-card__feat::before { color: var(--blue-l); }
-.price-card--hl .price-card__warning { color: var(--t-muted); }
-.price-card--hl .btn--blue           { color: #14110A; }
-
-/* Бейдж тарифа — тёмный текст на золотом градиенте */
-.price-card__badge { color: #14110A; }
+@media (max-width: 880px) {
+  .host-card { padding: 24px 22px; gap: 18px; }
+  .host-card__photo { width: 84px; height: 84px; }
+  .host-card__name { font-size: 21px; }
+}
