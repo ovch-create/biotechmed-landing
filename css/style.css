@@ -2461,3 +2461,19 @@ section { padding: 96px 0; }
   .host-card__photo { width: 84px; height: 84px; }
   .host-card__name { font-size: 21px; }
 }
+
+/* ===== Подсветка карточек ведущих (синяя полоса сверху + свечение) ===== */
+.host-card { position: relative; overflow: hidden; border-color: var(--blue-bdr); }
+.host-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--blue-l), transparent);
+  box-shadow: 0 0 14px rgba(14,165,233,0.5);
+}
+
+/* Спейсер роли — выравнивание имени, когда роли нет (Фомин) */
+.host-card__role--empty { visibility: hidden; }
