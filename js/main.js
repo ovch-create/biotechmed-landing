@@ -1,4 +1,4 @@
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwDC7-stmJkyWU3Wo_EEkRcD3UO-dvWaD_NFXYjCjKtKnR-9j6Cp7PUqN0ysM81d7Iu/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT1z4LZUiGiHC2dhViN4i8JU5F4m51UoUzPOcAG7jfEmCR8lYehOk1OzFrYVS1Iv1w/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
   initCanvas();
