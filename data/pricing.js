@@ -2,8 +2,10 @@ const pricing = [
   {
     title: "Иду один",
     subtitle: "Самара, 19 сентября",
-    price: "XXXX ₽",
-    highlighted: false,
+    price: "2500 ₽",
+    priceDetail: "Специальная цена действует до 15 августа",
+    highlighted: true,
+    badgeText: "Цена до 15 августа",
     features: [
       "Участие во всей лекционной и практической программе",
       "Полная видеозапись интенсива после мероприятия",
@@ -14,27 +16,9 @@ const pricing = [
     note: "Количество мест в зале строго ограничено",
     cta: "Оплатить участие",
     formFormat: "Очное",
-    formPrice: "XXXX ₽",
-    pairForm: false
-  },
-  {
-    title: "Идём вдвоём",
-    subtitle: "Вы + коллега",
-    price: "XXXX ₽",
-    highlighted: true,
-    badgeText: "Выгоднее",
-    features: [
-      "2 билета на интенсив по специальной сниженной цене",
-      "Участие во всей программе для двух человек",
-      "Полная видеозапись интенсива для каждого участника",
-      "Доступ к зоне экспресс-диагностики для обоих специалистов",
-      "Кофе-брейки и профессиональный нетворкинг",
-      "2 именных сертификата с баллами НМО"
-    ],
-    note: "Количество мест в зале строго ограничено",
-    cta: "Оплатить 2 билета",
-    formFormat: "Очное — на двоих",
-    formPrice: "XXXX ₽",
-    pairForm: true
+    formPrice: "2500 ₽",
+    pairForm: false,
+    widgetScriptId: "3b1ca72ba085db05e3e7aa2408ac47ff90b6c7ff",
+    widgetScriptSrc: "https://anagran.academy/pl/lite/widget/script?id=1627537"
   }
 ];

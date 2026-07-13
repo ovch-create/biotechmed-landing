@@ -242,6 +242,7 @@ function renderSpeakers() {
 function renderPricing() {
   const grid = document.getElementById('pricing-grid');
   if (!grid) return;
+  grid.classList.toggle('pricing__grid--single', pricing.length === 1);
   grid.innerHTML = pricing.map((p, i) => {
     const hlClass = p.highlighted ? 'price-card--hl' : '';
     const promoClass = p.promo ? 'price-card--promo' : '';

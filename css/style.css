@@ -1158,6 +1158,11 @@ section { padding: 96px 0; }
   margin: 0 auto;
 }
 
+.pricing__grid--single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 460px;
+}
+
 .price-card--promo.price-card--hl {
   box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.85), 0 16px 48px rgba(0, 0, 0, 0.18);
 }
