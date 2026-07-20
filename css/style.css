@@ -482,6 +482,13 @@ section { padding: 96px 0; }
   font-size: 13px;
   color: var(--t-muted);
 }
+.hero__card-link {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity .2s ease;
+}
+.hero__card-link:hover { opacity: .8; }
 
 .hero__card-cta {
   margin-top: 28px;
