@@ -246,9 +246,8 @@ function renderPricing() {
   grid.innerHTML = pricing.map((p, i) => {
     const hlClass = p.highlighted ? 'price-card--hl' : '';
     const promoClass = p.promo ? 'price-card--promo' : '';
-    const badgeText = p.badgeText || 'Рекомендуем';
     const badgeClass = p.promo ? 'price-card__badge price-card__badge--promo' : 'price-card__badge';
-    const badge = p.highlighted ? `<div class="${badgeClass}">${badgeText}</div>` : '';
+    const badge = p.highlighted && p.badgeText ? `<div class="${badgeClass}">${p.badgeText}</div>` : '';
     const subNote = p.priceNote
       ? `<div class="price-card__note-sm">${p.priceNote}</div><div class="price-card__note-sm">${p.priceLater}</div>`
       : '';

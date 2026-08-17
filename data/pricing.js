@@ -2,10 +2,8 @@ const pricing = [
   {
     title: "Живое участие: лекции + практика",
     subtitle: "Самара, 19 сентября",
-    price: "2500 ₽",
-    priceDetail: "Специальная цена действует до 15 августа",
+    price: "3500 ₽",
     highlighted: true,
-    badgeText: "Цена до 15 августа",
     features: [
       "Участие во всей лекционной и практической программе",
       "Доступ к зоне аппаратной экспресс-диагностики",
@@ -15,10 +13,10 @@ const pricing = [
     note: "Количество мест в зале ограничено",
     cta: "Оплатить участие",
     formFormat: "Очное",
-    formPrice: "2500 ₽",
+    formPrice: "3500 ₽",
     pairForm: false,
-    widgetScriptId: "3b1ca72ba085db05e3e7aa2408ac47ff90b6c7ff",
-    widgetScriptSrc: "https://anagran.academy/pl/lite/widget/script?id=1627537"
+    widgetScriptId: "e9917b5388d1f47244e092ebc23e9dd4e7d2828d",
+    widgetScriptSrc: "https://anagran.academy/pl/lite/widget/script?id=1627542"
   },
   {
     title: "Запись интенсива",
