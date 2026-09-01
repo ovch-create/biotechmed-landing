@@ -2527,3 +2527,6 @@ section { padding: 96px 0; }
   font-size: 14px;
   color: var(--t-muted);
 }
+
+/* Сетка подтверждённых спикеров: пока их немного — отбивка перед пометкой */
+.speakers__soon { margin-top: 28px; }
