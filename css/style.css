@@ -2493,7 +2493,7 @@ section { padding: 96px 0; }
 /* Спейсер роли — выравнивание имени, когда роли нет (Фомин) */
 .host-card__role--empty { visibility: hidden; }
 
-/* ===== ПЕРЕНОС: 19 сентября, Самара → 5 декабря, Казань ===== */
+/* ===== Акцент на дате и городе + пометки по составу экспертов ===== */
 :root {
   --amber:     #F5A524;
   --amber-l:   #FBC66B;
@@ -2501,93 +2501,8 @@ section { padding: 96px 0; }
   --amber-bdr: rgba(245,165,36,0.34);
 }
 
-/* Полоса-объявление над навигацией */
-.nav { flex-direction: column; align-items: stretch; padding-top: 0; }
-.nav__alert {
-  width: 100%;
-  background: linear-gradient(90deg, rgba(245,165,36,0.16), rgba(245,165,36,0.07) 60%, transparent);
-  border-bottom: 1px solid var(--amber-bdr);
-}
-.nav__alert-inner {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px 14px;
-  padding-top: 9px;
-  padding-bottom: 9px;
-  font-size: 13px;
-  line-height: 1.4;
-}
-.nav__alert-badge {
-  flex-shrink: 0;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
-  color: #1A1204;
-  background: var(--amber);
-  border-radius: 50px;
-  padding: 4px 11px;
-}
-.nav__alert-text { color: var(--white); }
-.nav__alert-text b { color: var(--amber-l); font-weight: 800; }
-.nav__alert-old {
-  color: var(--t-muted);
-  text-decoration: line-through;
-  text-decoration-color: rgba(255,255,255,0.3);
-  font-size: 12px;
-}
-.nav__alert + .nav__inner { padding-top: 10px; }
-
-.nav__date--moved { color: var(--amber-l); font-weight: 700; }
-
-/* Блок «дата перенесена» в hero */
-.hero__moved {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px 14px;
-  margin: -14px 0 28px;
-  padding: 12px 18px;
-  border: 1px solid var(--amber-bdr);
-  border-radius: 50px;
-  background: var(--amber-dim);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 34px rgba(245,165,36,0.14);
-}
-.hero__moved-badge {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1.6px;
-  text-transform: uppercase;
-  color: #1A1204;
-  background: var(--amber);
-  border-radius: 50px;
-  padding: 4px 11px;
-}
-.hero__moved-new {
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--amber-l);
-  letter-spacing: -0.2px;
-}
-.hero__moved-old {
-  font-size: 13px;
-  color: var(--t-muted);
-  text-decoration: line-through;
-  text-decoration-color: rgba(255,255,255,0.3);
-}
-
-/* Карточка «Детали события» */
+/* Карточка «Детали события»: дата и город — янтарным, чтобы считывались сразу */
 .hero__card-val--hl { color: var(--amber-l); }
-.hero__card-note {
-  margin-top: 4px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--amber);
-}
 .hero__card-sub--tbd { color: var(--t-muted); }
 
 /* Программа: пометка о составе экспертов */
@@ -2611,21 +2526,4 @@ section { padding: 96px 0; }
   text-align: center;
   font-size: 14px;
   color: var(--t-muted);
-}
-
-/* полоса-объявление добавляет высоту шапке — сдвигаем контент */
-html { scroll-padding-top: 190px; }
-.hero { padding-top: 176px; }
-
-@media (max-width: 880px) {
-  html { scroll-padding-top: 200px; }
-  .hero { padding-top: 186px; }
-  .nav__alert-old { display: none; }
-  .hero__moved { border-radius: var(--radius-lg); }
-}
-@media (max-width: 480px) {
-  .nav__alert-inner { font-size: 12px; gap: 8px 10px; }
-  .hero__moved { padding: 12px 14px; gap: 8px 10px; }
-  .hero__moved-new { font-size: 15px; }
-  .hero__moved-old { display: none; }
 }
