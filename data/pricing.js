@@ -2,21 +2,21 @@ const pricing = [
   {
     title: "Живое участие: лекции + практика",
     subtitle: "Казань, 5 декабря",
-    price: "3500 ₽",
+    price: "2500 ₽",
+    priceDetail: "Цена действует до 5 ноября",
     highlighted: true,
     features: [
       "Участие во всей лекционной и практической программе",
-      "Доступ к зоне аппаратной экспресс-диагностики",
       "Кофе-брейки и профессиональный нетворкинг",
       "Именной сертификат, подтверждающий участие в интенсиве"
     ],
     note: "Количество мест в зале ограничено",
     cta: "Оплатить участие",
     formFormat: "Очное",
-    formPrice: "3500 ₽",
+    formPrice: "2500 ₽",
     pairForm: false,
-    widgetScriptId: "e9917b5388d1f47244e092ebc23e9dd4e7d2828d",
-    widgetScriptSrc: "https://anagran.academy/pl/lite/widget/script?id=1627542"
+    widgetScriptId: "6bfe0b0e3188f88fc4dbc0f0489c74127f321807",
+    widgetScriptSrc: "https://anagran.academy/pl/lite/widget/script?id=1652284"
   },
   {
     title: "Запись интенсива",
