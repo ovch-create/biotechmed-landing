@@ -2543,3 +2543,9 @@ section { padding: 96px 0; }
 
 /* Сетка подтверждённых спикеров: пока их немного — отбивка перед пометкой */
 .speakers__soon { margin-top: 28px; }
+
+/* Юридическая информация в футере */
+.footer__legal { padding: 24px 0; font-size: 13px; color: var(--t-muted); border-top: 1px solid var(--border); margin-top: 8px; }
+.footer__legal p { margin: 0 0 6px; }
+.footer__bottom a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.footer__bottom a:hover { color: var(--blue-ll); }
