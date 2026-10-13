@@ -492,8 +492,6 @@ function initModal() {
       email: document.getElementById('form-email').value,
       phone: document.getElementById('form-phone').value,
       social: document.getElementById('form-social').value,
-      referral: document.getElementById('form-referral').value,
-      specialization: document.getElementById('form-spec').value,
       format: document.getElementById('form-format').value,
       price: document.getElementById('form-price-val').value,
       paymentStatus: 'Не подтверждена',
