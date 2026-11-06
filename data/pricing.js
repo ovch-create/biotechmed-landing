@@ -15,8 +15,8 @@ const pricing = [
     formFormat: "Очное",
     formPrice: "3000 ₽",
     pairForm: false,
-    widgetScriptId: "6bfe0b0e3188f88fc4dbc0f0489c74127f321807",
-    widgetScriptSrc: "https://anagran.academy/pl/lite/widget/script?id=1652284"
+    widgetScriptId: "13d83a3d5bd9029b90583932efecc50cc17ae774",
+    widgetScriptSrc: "https://anagran.academy/pl/lite/widget/script?id=1652286"
   },
   {
     title: "Запись интенсива",
