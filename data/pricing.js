@@ -2,7 +2,7 @@ const pricing = [
   {
     title: "Живое участие: лекции + практика",
     subtitle: "Казань, 5 декабря",
-    price: "2500 ₽",
+    price: "3000 ₽",
     priceDetail: "Цена действует до 5 ноября",
     highlighted: true,
     features: [
@@ -13,7 +13,7 @@ const pricing = [
     note: "Количество мест в зале ограничено",
     cta: "Оплатить участие",
     formFormat: "Очное",
-    formPrice: "2500 ₽",
+    formPrice: "3000 ₽",
     pairForm: false,
     widgetScriptId: "6bfe0b0e3188f88fc4dbc0f0489c74127f321807",
     widgetScriptSrc: "https://anagran.academy/pl/lite/widget/script?id=1652284"
