@@ -2556,5 +2556,16 @@ section { padding: 96px 0; }
 .footer__legal { font-size: 14px; color: rgba(255,255,255,0.65); }
 @media (max-width: 768px) { .footer__bottom { font-size: 14px; } }
 
-.hero__card-link { color: var(--amber, #f5a623); text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
-.hero__card-link:hover { text-decoration: none; }
+/* Площадка: название и адрес — одна голубая ссылка на карту */
+.hero__card-venue {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--blue-ll);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color .2s ease;
+}
+.hero__card-venue:hover { color: var(--blue-l); }
