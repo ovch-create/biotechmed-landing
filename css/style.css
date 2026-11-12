@@ -2555,3 +2555,6 @@ section { padding: 96px 0; }
 .footer__bottom a { color: rgba(255,255,255,0.85); }
 .footer__legal { font-size: 14px; color: rgba(255,255,255,0.65); }
 @media (max-width: 768px) { .footer__bottom { font-size: 14px; } }
+
+.hero__card-link { color: var(--amber, #f5a623); text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+.hero__card-link:hover { text-decoration: none; }
