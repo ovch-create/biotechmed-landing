@@ -2559,7 +2559,7 @@ section { padding: 96px 0; }
 /* Площадка: название и адрес — одна голубая ссылка на карту */
 .hero__card-venue {
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.45;
   color: var(--blue-ll);
@@ -2569,3 +2569,5 @@ section { padding: 96px 0; }
   transition: color .2s ease;
 }
 .hero__card-venue:hover { color: var(--blue-l); }
+
+.hero__card-val--city { color: var(--blue-ll); }
